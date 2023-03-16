@@ -23,7 +23,10 @@ describe("Create Voucher", () => {
     jest
       .spyOn(voucherRepository, "getVoucherByCode")
       .mockImplementationOnce((): any => true);
-    const result = await voucherService.createVoucher(code, discount);
-    expect(result).rejects.toBeInstanceOf(Error);
+    const result = voucherService.createVoucher(code, discount);
+    expect(result).rejects.toEqual({
+      message: "Voucher already exist.",
+      type: "conflict",
+    });
   });
 });
